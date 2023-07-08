@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Search page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        select, input[type="text"], input[type="submit"] {
+            padding: 8px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            width: 300px;
+            margin-bottom: 10px;
+        }
+
+        input[type="submit"] {
+            display: inline-block;
+            font-size: 14px;
+            font-weight: bold;
+            text-align: center;
+            text-decoration: none;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        .book {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+<h1>Search page</h1>
+
+<form th:method="GET" th:action="@{/books/search}">
+    <label>
+        <select name="bookSorting">
+            <option th:each="bs : ${bookSortings}" th:value="${bs}" th:text="${bs}"></option>
+        </select>
+    </label>
+    <br>
+    <label for="query">Enter the book's title:</label>
+    <input type="text" id="query" name="query" required>
+    <input type="submit" value="Find">
+</form>
+
+<p th:if="${books.size()!=0}" class="book">Books:</p>
+<div th:each="book : ${books}">
+    <p class="book" th:text="${book.getTitle() + ' (' + book.getAuthor() + ')' + ' ' + book.getYear()}"></p>
+</div>
+</body>
+</html>

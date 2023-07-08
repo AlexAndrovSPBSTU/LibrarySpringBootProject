@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Books</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+
+        a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .book {
+            margin-bottom: 10px;
+            padding: 10px;
+            background-color: #f5f5f5;
+            border-radius: 4px;
+        }
+
+        .book-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .book-author {
+            color: #777;
+            font-size: 14px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 8px 16px;
+            font-size: 14px;
+            font-weight: bold;
+            text-align: center;
+            text-decoration: none;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #0056b3;
+        }
+
+        .form-container {
+            display: inline-block;
+            margin-top: 20px;
+        }
+
+        .form-container input[type="submit"] {
+            background-color: #28a745;
+        }
+
+        .form-container input[type="submit"]:hover {
+            background-color: #1b6e32;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .buttons-container {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Library Books</h1>
+
+    <div th:each="book: ${books}" class="book">
+        <a th:href="@{/books/{id}(id=${book.getId()})}">
+            <div class="book-title" th:text="${book.getTitle()}"></div>
+            <div class="book-author" th:text="${'(' + book.getAuthor() + ')'}"></div>
+        </a>
+    </div>
+
+    <br>
+    <hr>
+
+    <div class="form-container">
+        <form th:method="GET" th:action="@{/books}">
+            <input type="number" th:value="${-1+page}" hidden="hidden" name="page">
+            <input type="submit" value="Previous page" class="btn" />
+        </form>
+    </div>
+
+        <div class="form-container">
+            <form th:method="GET" th:action="@{/books}">
+                <input type="number" th:value="${page+1}" hidden="hidden" name="page">
+                <input type="submit" value="Next page" class="btn" />
+            </form>
+        </div>
+
+        <div class="form-container">
+            <form action="/books/new">
+                <input type="submit" value="Create New" class="btn" />
+            </form>
+        </div>
+
+        <div class="form-container">
+            <form action="/readers">
+                <input type="submit" value="Go to Readers" class="btn" />
+            </form>
+        </div>
+
+        <div class="form-container">
+            <form action="/books/search">
+                <input type="submit" value="Go to Search" class="btn" />
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>
